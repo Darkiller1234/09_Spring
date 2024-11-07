@@ -10,7 +10,7 @@
   <resultMap type="Member" id="memberResultSet">
   	<result column="USER_ID" property="userId"/>
   	<result column="USER_PWD" property="userPwd"/>
-  	<result column="USER_NAME" property="userName"/>
+  	<result column="USER_NAME" property="userName"/>a
   	<result column="EMAIL" property="email"/>
 	<result column="AGE" property="age"/>
   	<result column="GENDER" property="gender"/>

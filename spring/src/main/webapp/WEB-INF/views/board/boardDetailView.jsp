@@ -107,7 +107,7 @@
 		                        <th colspan="2">
 		                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
 		                        </th>
-		                        <th style="vertical-align:middle"><button class="btn btn-secondary disabled" onclick="addReply">등록하기</button></th>
+		                        <th style="vertical-align:middle"><button class="btn btn-secondary disabled">등록하기</button></th>
 		                    </tr>
 	                	</c:when>
 	                    <c:otherwise>
@@ -133,9 +133,9 @@
         </div>
         <br><br>
     </div>
-    
+
     <script>
-        $(function(){           //onload 비슷한거
+        $(function(){
             const sendData = {
                 bno: ${b.boardNo}
             }
@@ -150,33 +150,38 @@
                 //댓글목록 그려주는 함수 호출
                 drawReplyList(replyBody, replyList);
             });
+
+
+
         })
 
         function drawReplyList(tBody, replyList){
-            //단순하게 보여주기 위한 view를 만들 때
+            //단순하게 보여주기위한 view를 만들때
             // let str = "";
-            // for(let reply of replyList){
+            // for(reply of replyList){
             //     str += `<tr>` + 
-            //                 `<td>` + reply.replyWriter + `<td>` + 
-            //                 `<td>` + reply.replyContent + `<td>` + 
-            //                 `<td>` + reply.createDate + `<td>` + 
+            //                 `<td>` + reply.replyWriter + `</td>` +
+            //                 `<td>` + reply.replyContent + `</td>` +
+            //                 `<td>` + reply.createDate + `</td>` +
             //             `</tr>`
             // }
             // tBody.innerHTML = str;
 
+            $(tBody).empty();
+            //tBody.innerHTML = ""
             //이벤트를 넣는 뷰를 작성하고 싶을 때
-            tBody.innerHTML = "";
             for(const reply of replyList){
-                const replyRow = document.createElement('tr'); //<tr></tr>
-                replyRow.innerHTML = `<td>` + reply.replyWriter + `<td>` + 
-                                  `<td>` + reply.replyContent + `<td>` + 
-                                  `<td>` + reply.createDate + `<td>`;
+                const replyRow = document.createElement('tr'); // <tr></tr>
+                replyRow.innerHTML = `<td>` + reply.replyWriter + `</td>` +
+                                     `<td>` + reply.replyContent + `</td>` +
+                                     `<td>` + reply.createDate + `</td>`;
                 tBody.appendChild(replyRow);
 
                 replyRow.onclick = function(){
-                    console.log(reply.replyNo + "클릭됨");
+                    console.log(reply.replyNo + "클릭됨")
                 }
             }
+
         }
 
         function setReplyCount(count){
@@ -199,7 +204,11 @@
 
         //댓글 등록
         function addReply(){
-            const boardNo = ${b.boardNo}
+            //boardNo
+            //userId
+            //댓글내용
+
+            const boardNo = ${b.boardNo};
             const userId = "${loginUser.userId}"
             const content = document.querySelector("#content").value;
 
@@ -208,35 +217,31 @@
                 replyWriter: userId,
                 replyContent: content
             }, function(res){
-                console.log(res)
+                // res -> 성공, 실패
                 if(res === "success") {
-                    const sendData = {
-                        bno: ${b.boardNo}
-                    }
-                    getReplyList(sendData, function(replyList){
-                        console.log(replyList)
-
-                        //댓글 갯수 나타내주는 함수 호출
-                        setReplyCount(replyList.length)
-                        //댓글목록 그려주는 함수 호출
+                    document.querySelector("#content").value = "";
+                    
+                    getReplyList({bno: boardNo}, function(replyList){
+                        setReplyCount(replyList.length);
                         drawReplyList(document.querySelector("#replyArea tbody"), replyList);
                     });
                 }
             })
         }
+
         function addReplyAjax(data, callback){
             $.ajax({
                 url: "rinsert.bo",
                 data: data,
                 success : function(res){
                     callback(res)
-                }, error : function(){
+                }, error: function(){
                     console.log("댓글 생성 ajax 실패")
                 }
             })
         }
     </script>
-
+    
     <jsp:include page="../common/footer.jsp" />
 </body>
 </html>
