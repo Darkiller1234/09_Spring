@@ -6,11 +6,10 @@
 <!-- namespace: 해당 mapper파일의 고유한 별칭 -->
 
 <mapper namespace="memberMapper">
-  
   <resultMap type="Member" id="memberResultSet">
   	<result column="USER_ID" property="userId"/>
   	<result column="USER_PWD" property="userPwd"/>
-  	<result column="USER_NAME" property="userName"/>a
+  	<result column="USER_NAME" property="userName"/>
   	<result column="EMAIL" property="email"/>
 	<result column="AGE" property="age"/>
   	<result column="GENDER" property="gender"/>

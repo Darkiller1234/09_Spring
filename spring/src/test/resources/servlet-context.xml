@@ -21,7 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kh" />
+	<context:component-scan base-package="com.kh.spring" />
 	
 	<!-- 
 		*사용자가 어떤ㄱ url로 요청시 해당문서가 읽혀진다고 생각하면 된다.
